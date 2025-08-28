@@ -1,0 +1,106 @@
+.post-container {
+  width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.post-image {
+  width: 100%;
+  height: 600px;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.post-title {
+  margin: 15px 0 8px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.post-content {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.post-btn {
+  padding: 6px 12px;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.post-comments {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.post-comments {
+  margin-top: 15px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.post-comments h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.comment {
+  background: #f7f7f7;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.comment strong {
+  color: #222;
+}
+
+.add-comment {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-comment button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.add-comment button:hover {
+  background: #0056b3;
+}
