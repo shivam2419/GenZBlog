@@ -1,0 +1,91 @@
+.dashboard-container {
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.upload-form input[type="text"],
+.upload-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.upload-form input[type="file"] {
+  border: none;
+}
+
+.upload-form button {
+  padding: 10px 15px;
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.upload-form button:hover {
+  background-color: #3730a3;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+  position: relative;
+}
+
+.post-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 8px;
+}
+
+.delete-btn {
+  background: red;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.delete-btn:hover {
+  opacity: 0.8;
+}
