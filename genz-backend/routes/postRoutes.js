@@ -12,14 +12,15 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 
     // Cloudinary se jo url aata hai wo `req.file.path` hota hai
     const image = req.file ? req.file.path : null;
-    const likes = 0, comments = 0;
+    const likes = 0,
+      comments = 0;
     const post = await Post.create({
       user: req.user.id,
       title,
       content,
       image,
       likes,
-      comments
+      comments,
     });
 
     res.status(201).json(post);
@@ -32,27 +33,28 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
 // Get all posts with pagination
 router.get("/", async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    let { page = 1, limit = 5 } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+
     const skip = (page - 1) * limit;
 
-    const total = await Post.countDocuments();
     const posts = await Post.find()
-      .populate("user", "username")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 
+    const total = await Post.countDocuments();
+
     res.json({
       posts,
-      total,
-      page,
-      pages: Math.ceil(total / limit),
+      hasMore: skip + posts.length < total
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 // postRoutes.js
 router.delete("/:id", protect, async (req, res) => {
@@ -76,7 +78,7 @@ router.get("/:postId", async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
     if (!post) return res.status(404).json({ message: "Post not found" });
-       
+
     res.json(post);
   } catch (err) {
     res.status(500).json({ message: err.message });
