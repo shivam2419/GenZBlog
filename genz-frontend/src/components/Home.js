@@ -57,7 +57,7 @@ export default function Home() {
       }
 
       setPosts((prev) => [...prev, ...newPosts]);
-
+        console.log(posts)
       // increment page only if new posts received
       pageRef.current += 1;
 

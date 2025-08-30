@@ -28,7 +28,6 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 // Get all posts
 // Get all posts with pagination
 router.get("/", async (req, res) => {
@@ -42,19 +41,45 @@ router.get("/", async (req, res) => {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .populate("user");
 
     const total = await Post.countDocuments();
 
     res.json({
       posts,
-      hasMore: skip + posts.length < total
+      hasMore: skip + posts.length < total,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.params.userId }) // filter by user ID
+      .populate("user");
+
+    if (!posts || posts.length === 0) {
+      return res.status(404).json({ message: "No posts found for this user" });
+    }
+
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get("/post/:postId", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId).populate("user");
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // postRoutes.js
 router.delete("/:id", protect, async (req, res) => {
@@ -74,14 +99,4 @@ router.delete("/:id", protect, async (req, res) => {
   }
 });
 
-router.get("/:postId", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: "Post not found" });
-
-    res.json(post);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 export default router;

@@ -18,15 +18,9 @@ export default function Dashboard() {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserId(userRes.data._id);
-
-        const res = await API.get("/posts", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get(`/posts/user/${userRes.data._id}`);
         // only current user's posts
-        const userPosts = res.data.posts.filter(
-          (post) => post.user._id === userRes.data._id
-        );
-        setPosts(userPosts);
+        setPosts(res.data);
       } catch (err) {
         console.error(err);
       }
@@ -104,14 +98,14 @@ export default function Dashboard() {
         ) : (
           posts.map((post) => (
             <div key={post._id} className="post-card">
+              <p className="post-date">
+                {new Date(post.createdAt).toLocaleString()}
+              </p>
               <h3>{post.title}</h3>
               <p>{post.content}</p>
               {post.image && (
                 <img src={post.image} alt="post" className="post-image" />
               )}
-              <p className="post-date">
-                {new Date(post.createdAt).toLocaleString()}
-              </p>
               <button
                 className="delete-btn"
                 onClick={() => handleDelete(post._id)}

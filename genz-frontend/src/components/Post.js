@@ -10,7 +10,7 @@ export default function Post() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await API.get(`posts/${postId}`);
+        const res = await API.get(`posts/post/${postId}`);
         // Handle different response formats
         setPost(res.data);
       } catch (err) {
@@ -89,33 +89,46 @@ export default function Post() {
 
   return (
     <div className="post-container">
+      <span className="post-container-profile-header">
+        <img
+          src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
+          alt=""
+          height={40}
+        />
+        <h3>{post.user ? post.user.username : "Anonymous"}</h3>
+      </span>
       <img src={post.image} alt="post" className="post-image" />
 
       <h2 className="post-title">{post.title}</h2>
       <p className="post-content">{post.content}</p>
 
       <div className="post-actions">
-        <button
-          className="post-btn"
-          onClick={() => {
+      <button className="action-btn" onClick={() => {
             handleLike(post._id);
-          }}
-        >
-          👍 {post.likes}
-        </button>
-        <button className="post-btn">💬 {post.comments}</button>
-      </div>
+          }}>
+        ❤️ <span>{post.likes}</span>
+      </button>
+      <button className="action-btn">
+        💬 <span>{post.comments}</span>
+      </button>
+    </div>
 
       <div className="post-comments">
         <h4>Comments</h4>
         {comments.length > 0 ? (
           comments.map((c, i) => (
             <div key={i} className="comment">
-              <strong>
-                {c.author.username.charAt(0).toUpperCase() +
-                  c.author.username.slice(1) || "Anonymous"}
-              </strong> 
-              : {c.content}
+              <div className="comment-header">
+                <strong>
+                  {c.author.username.charAt(0).toUpperCase() +
+                    c.author.username.slice(1) || "Anonymous"}
+                </strong>
+                <span className="comment-date">
+                  {new Date(c.createdAt).toLocaleDateString()}{" "}
+                  {/* format date */}
+                </span>
+              </div>
+              <p>{c.content}</p>
             </div>
           ))
         ) : (
@@ -123,15 +136,15 @@ export default function Post() {
         )}
 
         {/* Add new comment */}
-        <div className="add-comment">
+        <form className="add-comment" onSubmit={handleComment}>
           <input
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
           />
-          <button onClick={handleComment}>Post</button>
-        </div>
+          <button type="submit">Post</button>
+        </form>
       </div>
     </div>
   );
